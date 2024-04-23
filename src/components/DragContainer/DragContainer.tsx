@@ -1,18 +1,23 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { rootSlice } from "../../redux/appReducer";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import style from './DragContainer.module.css'
+import { TasksColumn } from "../TasksColumn/TasksColumn";
 
+import { ITask } from "../../types/data";
 
 export const DragContainer: FC = () => {
+
     const {handleChange, addTask} = rootSlice.actions;
 
-    const {planned, inProgress, done, title} = useAppSelector(state => state.rootSlice);
-    console.log(planned);
+    const {tasks, title, activeCard} = useAppSelector(state => state.rootSlice);
     
     const dispatch = useAppDispatch();
 
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks))
+    }, [tasks])
     
 
     return (
@@ -22,39 +27,22 @@ export const DragContainer: FC = () => {
                 <input type="text" value={title} onChange={e => dispatch(handleChange(e.target.value))} placeholder="..." />
             </label>
             <div className={style.main}>
-                <ul className={style.table}>
-                    <p>Planned</p>
-                    {planned.map(task => {
-                        return (
-                            <div key={task.id} className={style.task} draggable={true}>
-                                <p>id: {task.id}</p>
-                                <p>{task.title}</p>                        
-                            </div>
-                        )
-                    })}
-                </ul>
-                <ul className={style.table}>
-                    <p>In progress</p>
-                    {inProgress && inProgress.map(task => {
-                        return (
-                            <>
-                                <p key={task.id} className={style.task}>{task.title}</p>                            
-                            </>
-                        )
-                    })}
-                </ul>
-                <ul className={style.table}>
-                    <p>Done</p>
-                    {done && done.map(task => {
-                        return (
-                            <>
-                                <p key={task.id} className={style.task}>{task.title}</p>
-                            </>
-                        )
-                    })}
-                </ul>
+                <>
+                    <TasksColumn    tasks={tasks}
+                                    title="Planned"
+                                    status='planned'
+                    />
+                    <TasksColumn    tasks={tasks} 
+                                    title="In Progress"
+                                    status="in progress"
+                    />
+                    <TasksColumn    tasks={tasks}
+                                    title="Done"
+                                    status="done"
+                    />
+                </>
+                <h1>ActiveCard - {activeCard}</h1>
             </div>
         </div>
-        
     )
 }

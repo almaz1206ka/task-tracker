@@ -2,16 +2,45 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import { ITaskState } from "../types/data";
 
+const oldTasks = localStorage.getItem('tasks');
+
+
 const initialState: ITaskState = {
-    planned: [],
-    inProgress: [],
-    done: [],
+    tasks: [
+        {
+            id: 2,
+            title: '124',
+            status: 'in progress'
+        },
+        {
+            id: 2,
+            title: '124',
+            status: 'done'
+        },
+        {
+            id: 2,
+            title: '124',
+            status: 'done'
+        },
+        {
+            id: 2,
+            title: '124',
+            status: 'in progress'
+        },
+        {
+            id: 2,
+            title: '124',
+            status: 'planned'
+        },
+    ],
     task: {
         id: 0,
-        title: ''
+        title: '',
+        status: ''
     },
     isDropped: false,
-    title: ''
+    title: '',
+    activeCard: null
 };
 
 
@@ -23,8 +52,15 @@ export const rootSlice = createSlice({
             state.title = action.payload;
         },
         addTask(state) {
-            state.planned = [...state.planned, {...state.task, id: state.task.id += 1, title: state.title}];
+            state.tasks = [...state.tasks, {...state.task, id: state.task.id += 1, title: state.title, status: 'planned'}];
             state.title = ''
+        },
+        setActiveCard(state, action) {
+            state.activeCard = action.payload
+        },
+        onDrope(state, status) {
+            console.log(`${state.activeCard} is going to place into ${status} and the position`);
+            
         }
     }
 });

@@ -1,13 +1,13 @@
 export interface ITask {
     id: number,
-    title: string
+    title: string,
+    status: string
 };
 
 export interface ITaskState {
-    planned: ITask[],
-    inProgress: ITask[],
-    done: ITask[],
+    tasks: ITask[],
     task: ITask,
     isDropped: boolean,
-    title: string
+    title: string,
+    activeCard: null | number
 }
