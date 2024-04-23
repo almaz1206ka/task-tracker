@@ -1,11 +1,10 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { rootSlice } from "../../redux/appReducer";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 
 import style from './DragContainer.module.css'
 import { TasksColumn } from "../TasksColumn/TasksColumn";
 
-import { ITask } from "../../types/data";
 
 export const DragContainer: FC = () => {
 
@@ -14,11 +13,6 @@ export const DragContainer: FC = () => {
     const {tasks, title, activeCard} = useAppSelector(state => state.rootSlice);
     
     const dispatch = useAppDispatch();
-
-    useEffect(() => {
-        localStorage.setItem('tasks', JSON.stringify(tasks))
-    }, [tasks])
-    
 
     return (
         <div className={style.container}>

@@ -1,20 +1,14 @@
 import { FC, useState } from "react";
 
-import style from './DropArea.module.css'
-import { rootSlice } from "../../redux/appReducer";
-import { useAppDispatch } from "../../hooks/redux";
+import style from './DropArea.module.css';
 
 interface IDropAreaProps {
-    status: string,
-    index: number,
+    onDrop: () => void;
 }
 
 export const DropArea: FC<IDropAreaProps> = ({...props}) => {
-    const {index, status} = props;
+    const {onDrop} = props;
     const [showDrop, setShowDrop] = useState(false);
-
-    const {onDrope} = rootSlice.actions;
-    const dispatch = useAppDispatch();
 
     return (
         <section 
@@ -22,7 +16,7 @@ export const DropArea: FC<IDropAreaProps> = ({...props}) => {
             onDragEnter={() => setShowDrop(true)} 
             onDragLeave={() => setShowDrop(false)}
             onDrop={() => {
-                dispatch(onDrope(status))
+                onDrop();
                 setShowDrop(false)
             }}
             onDragOver={e => e.preventDefault()}
