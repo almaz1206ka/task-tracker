@@ -1,7 +1,8 @@
 export interface ITask {
     id?: number,
     title: string,
-    status: string
+    status: string,
+    edited: boolean
 };
 
 export interface ITaskState {
@@ -9,5 +10,6 @@ export interface ITaskState {
     task: ITask,
     isDropped: boolean,
     title: string,
-    activeCard: null | number
+    activeCard: null | number,
+    editedTitle: string
 }

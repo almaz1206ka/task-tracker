@@ -6,32 +6,39 @@ const initialState: ITaskState = {
     tasks: [
         {
             title: 'Погулять с собакой',
-            status: 'in progress'
+            status: 'in progress',
+            edited: false
         },
         {
             title: 'Поездка в деревню',
-            status: 'done'
+            status: 'done',
+            edited: false
         },
         {
             title: 'Сходить в кино',
-            status: 'done'
+            status: 'done',
+            edited: false
         },
         {
             title: 'Учить React',
-            status: 'in progress'
+            status: 'in progress',
+            edited: false
         },
         {
             title: 'Заняться йогой',
-            status: 'planned'
+            status: 'planned',
+            edited: false
         },
     ],
     task: {
         title: '',
-        status: ''
+        status: '',
+        edited: false
     },
     isDropped: false,
     title: '',
-    activeCard: null
+    activeCard: null,
+    editedTitle: ''
 };
 
 export const rootSlice = createSlice({
@@ -50,6 +57,35 @@ export const rootSlice = createSlice({
         },
         changeTaskStatus(state, action) {
             state.tasks = [...action.payload]
+        },
+        handleChangeEditTitle(state, action) {
+            state.editedTitle = action.payload
+        },
+        editTitle(state, action) {
+            state.tasks = state.tasks.map((task, idx) => {
+                if(idx === action.payload) {
+                    return {
+                        ...task,
+                        edited: true
+                    }
+                };
+                return task
+            })
+        },
+        editTitleEnd(state) {
+            if(state.editedTitle !== '') {
+                state.tasks = state.tasks.map((task, idx) => {
+                    if(task.edited === true) {
+                        return {
+                            ...task,
+                            title: state.editedTitle,
+                            edited: false
+                        }
+                    };
+                    return task
+                })
+            }
+            state.editedTitle = '';
         }
     }
 });

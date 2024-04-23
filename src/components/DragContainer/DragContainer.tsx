@@ -10,7 +10,7 @@ export const DragContainer: FC = () => {
 
     const {handleChange, addTask} = rootSlice.actions;
 
-    const {tasks, title, activeCard} = useAppSelector(state => state.rootSlice);
+    const {tasks, title} = useAppSelector(state => state.rootSlice);
     
     const dispatch = useAppDispatch();
 
@@ -35,7 +35,6 @@ export const DragContainer: FC = () => {
                                     status="done"
                     />
                 </>
-                <h1>ActiveCard - {activeCard}</h1>
             </div>
         </div>
     )

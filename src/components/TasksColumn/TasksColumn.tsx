@@ -6,6 +6,7 @@ import { ITask } from "../../types/data";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { rootSlice } from "../../redux/appReducer";
 import { DropArea } from "../DropArea/DropArea";
+import { TaskCard } from "../TaskCard/TaskCard";
 
 interface ITaskProps {
     title: string,
@@ -18,8 +19,8 @@ export const TasksColumn:FC<ITaskProps> = ({...props}) => {
 
     const {tasks, title, status} = props;
 
-    const {setActiveCard, changeTaskStatus} = rootSlice.actions;
-    const {activeCard} = useAppSelector(state => state.rootSlice)
+    const {setActiveCard, changeTaskStatus, editTitle, handleChangeEditTitle, editTitleEnd} = rootSlice.actions;
+    const {activeCard, editedTitle} = useAppSelector(state => state.rootSlice)
     const dispatch = useAppDispatch();    
 
     const onDrop = (status: string, position: number) => {
@@ -36,26 +37,35 @@ export const TasksColumn:FC<ITaskProps> = ({...props}) => {
     };  
 
     return (
-        <div className={style.table}>
-            <ul>
+        <div
+            className={style.table} 
+            onDrop={() => onDrop(status, 0)} 
+            onDragOver={e => e.preventDefault()}
+        >
+            <ul className={style.table__content} onKeyDown={(e) => e.key === 'Enter' && dispatch(editTitleEnd())}>
                 <h4>{title}</h4>
                 <DropArea onDrop={() => onDrop(status, 0)}/>
                 {tasks.map((task, idx) => {
                     return task.status === status && (
                         <>
-                            <li key={idx} 
-                                className={style.task}
-                                draggable 
-                                onDragStart={() => dispatch(setActiveCard(idx))} 
-                                onDragEnd={() => dispatch(setActiveCard(null))}
-                            >
-                                <span>Task: {task.title}</span>
-                            </li>
-                            <DropArea onDrop={() => onDrop(status, idx + 1)} />
+                            <TaskCard
+                                key={idx} 
+                                task={task}
+                                dragStart={() => dispatch(setActiveCard(idx))}
+                                dragEnd={() => dispatch(setActiveCard(null))}
+                                changeEditStatus={() => dispatch(editTitle(idx))}
+                            />
+                            {task.edited === true
+                                && 
+                            <input type="text" value={editedTitle} autoFocus onChange={(e) => dispatch(handleChangeEditTitle(e.target.value))} />
+                            }
+                            <DropArea 
+                                onDrop={() => onDrop(status, idx + 1)} 
+                            />
                         </>
                     )
                 })}
             </ul>
         </div>
     )
-}
+};
