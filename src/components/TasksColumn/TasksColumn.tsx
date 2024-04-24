@@ -37,12 +37,8 @@ export const TasksColumn:FC<ITaskProps> = ({...props}) => {
     };  
 
     return (
-        <div
-            className={style.table} 
-            onDrop={() => onDrop(status, 0)} 
-            onDragOver={e => e.preventDefault()}
-        >
-            <ul className={style.table__content} onKeyDown={(e) => e.key === 'Enter' && dispatch(editTitleEnd())}>
+        <div className={style.table} >
+            <ul className={style.table__content} onKeyDown={(e) => (e.key === 'Enter' || e.key === 'Escape') && dispatch(editTitleEnd())}>
                 <h4>{title}</h4>
                 <DropArea onDrop={() => onDrop(status, 0)}/>
                 {tasks.map((task, idx) => {
@@ -57,7 +53,12 @@ export const TasksColumn:FC<ITaskProps> = ({...props}) => {
                             />
                             {task.edited === true
                                 && 
-                            <input type="text" value={editedTitle} autoFocus onChange={(e) => dispatch(handleChangeEditTitle(e.target.value))} />
+                            <input 
+                                type="text" 
+                                value={editedTitle}
+                                autoFocus
+                                onChange={(e) => dispatch(handleChangeEditTitle(e.target.value))}
+                            />
                             }
                             <DropArea 
                                 onDrop={() => onDrop(status, idx + 1)} 

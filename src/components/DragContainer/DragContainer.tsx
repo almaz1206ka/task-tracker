@@ -1,25 +1,18 @@
 import { FC } from "react";
-import { rootSlice } from "../../redux/appReducer";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useAppSelector } from "../../hooks/redux";
 
 import style from './DragContainer.module.css'
 import { TasksColumn } from "../TasksColumn/TasksColumn";
+import { InputArea } from "../Input/Input";
 
 
 export const DragContainer: FC = () => {
 
-    const {handleChange, addTask} = rootSlice.actions;
-
-    const {tasks, title} = useAppSelector(state => state.rootSlice);
+    const {tasks} = useAppSelector(state => state.rootSlice);
     
-    const dispatch = useAppDispatch();
-
     return (
         <div className={style.container}>
-            <label onKeyDown={(e) => e.key === 'Enter' && dispatch(addTask())}>
-                <h4>Добавить задачу</h4>
-                <input type="text" value={title} onChange={e => dispatch(handleChange(e.target.value))} placeholder="..." />
-            </label>
+            <InputArea />
             <div className={style.main}>
                 <>
                     <TasksColumn    tasks={tasks}

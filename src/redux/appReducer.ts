@@ -49,7 +49,9 @@ export const rootSlice = createSlice({
             state.title = action.payload;
         },
         addTask(state) {
-            state.tasks = [...state.tasks, {...state.task, title: state.title, status: 'planned'}];
+            if(state.title.trim() !== '') {
+                state.tasks = [...state.tasks, {...state.task, title: state.title, status: 'planned'}];
+            };
             state.title = ''
         },
         setActiveCard(state, action) {
@@ -58,33 +60,32 @@ export const rootSlice = createSlice({
         changeTaskStatus(state, action) {
             state.tasks = [...action.payload]
         },
-        handleChangeEditTitle(state, action) {
+        handleChangeEditTitle(state, action) {            
             state.editedTitle = action.payload
         },
         editTitle(state, action) {
-            state.tasks = state.tasks.map((task, idx) => {
-                if(idx === action.payload) {
-                    return {
-                        ...task,
-                        edited: true
-                    }
-                };
-                return task
-            })
+            state.tasks = state.tasks.map((task, idx) => idx === action.payload ?
+                {...task, edited: true }
+                    : 
+                {...task, edited: false}
+            )
         },
         editTitleEnd(state) {
-            if(state.editedTitle !== '') {
-                state.tasks = state.tasks.map((task, idx) => {
-                    if(task.edited === true) {
-                        return {
-                            ...task,
-                            title: state.editedTitle,
-                            edited: false
-                        }
-                    };
-                    return task
-                })
-            }
+            state.tasks = state.tasks.map((task, idx) => {
+                if(task.edited === true && state.editedTitle !== '') {
+                    return {
+                        ...task,
+                        title: state.editedTitle,
+                        edited: false
+                    }
+                } else {
+                    return {
+                        ...task,
+                        title: task.title,
+                        edited: false
+                    }
+                };
+            })
             state.editedTitle = '';
         }
     }
