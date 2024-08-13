@@ -13,3 +13,8 @@
     background-color: #50554c;
     color: aliceblue;
 }
+
+.test {
+    display: flex;
+    padding: 12px;
+}
