@@ -13,3 +13,7 @@ export interface ITaskState {
     activeCard: null | number,
     editedTitle: string
 }
+
+export type TTypes = {
+    test: string
+}
