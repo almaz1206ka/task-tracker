@@ -16,4 +16,5 @@
 
 .test {
     display: flex;
+    padding: auto;
 }
