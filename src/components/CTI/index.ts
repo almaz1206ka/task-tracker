@@ -18,7 +18,8 @@ type TType = {
 }
 enum length {
     "error" = "3",
-    "notConnect" = "0"
+    "notConnect" = "0",
+    "success" = "5"
 }
 
 export const arrLength = (arr: any[]) => {
