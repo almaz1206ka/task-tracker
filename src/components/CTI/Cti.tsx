@@ -38,7 +38,7 @@ export const Cti = () => {
     });
 
 
-    return <div style={{position: "fixed", top: 0, marginBottom: "20px", backgroundColor: "ButtonShadow", width: "100%", display: "flex", justifyContent: "space-around"}}>
+    return <div style={{position: "fixed", top: 25, marginBottom: "20px", backgroundColor: "ButtonShadow", width: "100%", display: "flex", justifyContent: "space-around"}}>
         <button onClick={() => play()}>play</button>
         <button onClick={() => pause()}>pause</button>
         <button onClick={() => reset()}>reset</button>
