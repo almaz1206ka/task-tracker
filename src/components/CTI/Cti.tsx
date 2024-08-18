@@ -11,14 +11,13 @@ export const Cti = () => {
     // const odd = sortArr(arr).odd;
     // console.log(odd)
     // console.log(even);
-    const test = arrLength(arr);
-    console.log(test);
-    
+    // const test = arrLength(arr);
+    // console.log(test);
 
     const play = () => {
         setTime(({minutes, seconds}): {minutes: string, seconds: string} => {
             return {
-                minutes: seconds === "59" ? "0" + String(Number(minutes[1]) + 1) : (minutes[1] === "9" && seconds === "59") ? String(Number(minutes[0]) + 1) + minutes[1] : minutes,
+                minutes: (minutes[1] === "9" && seconds === "59") ? String(Number(minutes[0]) + 1) + "0" : seconds === "59" ? minutes[0] + String(Number(minutes[1]) + 1) : minutes,
                 seconds: seconds === "59" ? "00" : seconds[1] === "9" ? String(Number(seconds[0]) + 1) + "0" : seconds[0] + String(Number(seconds[1]) + 1)
             }
         });
