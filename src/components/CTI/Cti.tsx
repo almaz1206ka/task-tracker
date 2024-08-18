@@ -32,7 +32,7 @@ export const Cti = () => {
     }
 
     useEffect(() => {
-        const timer = setInterval(() => toggle && play(), 30);
+        const timer = setInterval(() => toggle && play(), 100);
 
         return () => clearInterval(timer)
     });
