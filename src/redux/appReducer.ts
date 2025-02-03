@@ -29,6 +29,11 @@ const initialState: ITaskState = {
             status: 'planned',
             edited: false
         },
+        {
+            title: 'Погулять',
+            status: 'done',
+            edited: false
+        }
     ],
     task: {
         title: '',
