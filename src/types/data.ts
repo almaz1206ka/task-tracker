@@ -17,3 +17,13 @@ export interface ITaskState {
 export type TTypes = {
     test: string
 }
+
+enum Directions {
+    Up = 1,
+    Down = 2,
+    Left = 3,
+    Right
+}
+
+console.log(Directions.Up); // 1
+console.log(Directions[Directions.Up]); // Up
